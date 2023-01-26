@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { setUser } from './store/slice/userSlice';
+import { loadMyInfo, setUser } from './store/slice/userSlice';
 
 const App = () => {
   const { name, phone, id } = useAppSelector((state) => state.user);
@@ -14,12 +14,22 @@ const App = () => {
     dispatch(setUser(data));
   };
 
+  const handleClick2 = () => {
+    let data = {
+      id: '2',
+      name: 'kjh2',
+      phone: '0102',
+    };
+    dispatch(loadMyInfo(data));
+  };
+
   return (
     <>
       <div>name : {name}</div>
       <div>phone : {phone}</div>
       <div>id : {id}</div>
       <button onClick={handleClick}>button</button>
+      <button onClick={handleClick2}>button2</button>
     </>
   );
 };
