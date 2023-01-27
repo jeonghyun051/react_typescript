@@ -1,6 +1,7 @@
 package com.example.chat;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RedisHash(value = "people", timeToLive = 30)
+@ToString
 public class Person {
 
     @Id

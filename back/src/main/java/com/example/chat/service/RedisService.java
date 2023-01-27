@@ -3,9 +3,7 @@ package com.example.chat.service;
 import com.example.chat.Person;
 import com.example.chat.PersonRedisRepository;
 import com.example.chat.dto.ChatDto;
-import com.example.chat.model.User;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestService {
+public class RedisService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -62,19 +60,21 @@ public class TestService {
         redisTemplate.setKeySerializer(new StringRedisSerializer()); // String 타입
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatDto.class));
 
-        redisTemplate.opsForList().rightPush(chat.getRoomKey(), chat);
-        redisTemplate.opsForList().rightPush(chat2.getRoomKey(), chat2);
-        redisTemplate.opsForList().rightPush(chat3.getRoomKey(), chat3);
+//        redisTemplate.opsForList().rightPush(chat.getRoomNo(), chat);
+//        redisTemplate.opsForList().rightPush(chat2.getRoomNo(), chat2);
+//        redisTemplate.opsForList().rightPush(chat3.getRoomNo(), chat3);
 
-        rList = (List) redisTemplate.opsForList().range(chat.getRoomKey(), 0 ,-1);
+        rList = (List) redisTemplate.opsForList().range(chat.getRoomNo(), 0 ,-1);
 
-        Person person = new Person("Park33", 20);
 
-        // 저장
-        repo.save(person);
-
-        // `keyspace:id` 값을 가져옴
-        System.out.println(repo.findById(person.getId()));
+        // jpa repository 사용 가능
+//        Person person = new Person("Park33", 20);
+//
+//        // 저장
+//        repo.save(person);
+//
+//        // `keyspace:id` 값을 가져옴
+//        System.out.println(repo.findById(person.getId()));
 
 
         return rList;

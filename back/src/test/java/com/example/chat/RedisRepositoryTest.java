@@ -24,6 +24,6 @@ public class RedisRepositoryTest {
         repo.count();
 
         // 삭제
-        repo.delete(person);
+//        repo.delete(person);
     }
 }
