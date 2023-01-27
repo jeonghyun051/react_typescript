@@ -1,5 +1,7 @@
 package com.example.chat.service;
 
+import com.example.chat.Person;
+import com.example.chat.PersonRedisRepository;
 import com.example.chat.dto.ChatDto;
 import com.example.chat.model.User;
 import java.util.Date;
@@ -21,15 +23,16 @@ public class TestService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Autowired
+    private PersonRedisRepository repo;
+
 
     public Map<Object, Object> getMap() {
 
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         String hashKey = "hashKey";
 
-        User user = new User(1,"김","5013");
-
-        hashOperations.put(hashKey, "hello", user);
+        hashOperations.put(hashKey, "hello", "world");
         Object value = hashOperations.get(hashKey, "hello");
         System.out.println("value : " + value);
         Map<Object, Object> entries = hashOperations.entries(hashKey);
@@ -64,6 +67,15 @@ public class TestService {
         redisTemplate.opsForList().rightPush(chat3.getRoomKey(), chat3);
 
         rList = (List) redisTemplate.opsForList().range(chat.getRoomKey(), 0 ,-1);
+
+        Person person = new Person("Park33", 20);
+
+        // 저장
+        repo.save(person);
+
+        // `keyspace:id` 값을 가져옴
+        System.out.println(repo.findById(person.getId()));
+
 
         return rList;
 
