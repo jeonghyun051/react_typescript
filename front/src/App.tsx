@@ -33,7 +33,7 @@ const App = () => {
 
   const handleClick3 = () => {
     let data = {
-      roomKey: 'abc', // 방번호
+      roomNo: 'asd', // 방번호
       userName: 'k', // 유저이름
       userNo: '0', // 유저번호
       msg: 'ms', // 메세지
@@ -50,7 +50,7 @@ const App = () => {
     <>
       <Socket
         url='http://localhost:8080/ws-stomp'
-        topics={['/sub/chat/room/abc']}
+        topics={['/sub/chat/room/asd']}
         onMessage={(msg: any) => {
           console.log('socket msg : ', msg);
         }}
