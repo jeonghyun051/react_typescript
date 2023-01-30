@@ -4,6 +4,7 @@ import com.example.chat.dto.ChatDto;
 import com.example.chat.pubsub.RedisPublisher;
 import com.example.chat.repo.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;

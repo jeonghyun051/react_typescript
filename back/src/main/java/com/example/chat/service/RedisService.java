@@ -53,18 +53,18 @@ public class RedisService {
         String roomKey = "1";
         List<ChatDto> rList = null;
 
-        ChatDto chat = new ChatDto("room1","kjh","1","msg1",new Date().toString(),"user");
-        ChatDto chat2 = new ChatDto("room1","kjh","1","msg2",new Date().toString(),"user");
-        ChatDto chat3 = new ChatDto("room2","kjh","1","msg3",new Date().toString(),"user");
-
-        redisTemplate.setKeySerializer(new StringRedisSerializer()); // String 타입
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatDto.class));
-
-//        redisTemplate.opsForList().rightPush(chat.getRoomNo(), chat);
-//        redisTemplate.opsForList().rightPush(chat2.getRoomNo(), chat2);
-//        redisTemplate.opsForList().rightPush(chat3.getRoomNo(), chat3);
-
-        rList = (List) redisTemplate.opsForList().range(chat.getRoomNo(), 0 ,-1);
+//        ChatDto chat = new ChatDto("room1","kjh","1","msg1",new Date().toString(),"user");
+//        ChatDto chat2 = new ChatDto("room1","kjh","1","msg2",new Date().toString(),"user");
+//        ChatDto chat3 = new ChatDto("room2","kjh","1","msg3",new Date().toString(),"user");
+//
+//        redisTemplate.setKeySerializer(new StringRedisSerializer()); // String 타입
+//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatDto.class));
+//
+////        redisTemplate.opsForList().rightPush(chat.getRoomNo(), chat);
+////        redisTemplate.opsForList().rightPush(chat2.getRoomNo(), chat2);
+////        redisTemplate.opsForList().rightPush(chat3.getRoomNo(), chat3);
+//
+//        rList = (List) redisTemplate.opsForList().range(chat.getRoomNo(), 0 ,-1);
 
 
         // jpa repository 사용 가능

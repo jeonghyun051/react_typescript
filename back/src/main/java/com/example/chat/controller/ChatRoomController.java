@@ -4,6 +4,7 @@ import com.example.chat.model.Room;
 import com.example.chat.service.ChatRoomService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,19 +26,18 @@ public class ChatRoomController {
     }
 
     @GetMapping("/room")
-    public ResponseEntity<String> room() {
-        return new ResponseEntity<>("1", HttpStatus.OK);
+    public ResponseEntity<Room> room(@RequestBody Room room) {
+        return new ResponseEntity<>(chatRoomService.findRoom(room), HttpStatus.OK);
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<Set<String>> findAllRoom() {
-        List list = new ArrayList();
+    public ResponseEntity<Map<Object,Object>> findAllRoom() {
         return new ResponseEntity<>(chatRoomService.findAllRoom(), HttpStatus.OK);
     }
 
     @PostMapping("/room")
-    public ResponseEntity<?> createRoom(String name) {
-        return new ResponseEntity<>(chatRoomService.createRoom(name), HttpStatus.OK);
+    public ResponseEntity<?> createRoom(@RequestBody Room room) {
+        return new ResponseEntity<>(chatRoomService.createRoom(room), HttpStatus.OK);
     }
 
     @GetMapping("/room/enter/{roomId}")

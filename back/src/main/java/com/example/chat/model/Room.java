@@ -9,9 +9,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Room implements Serializable {
+public class Room {
 
-    private static final long serialVersionUID = 6494678977089006639L;
     private String no;
     private String name;
 
