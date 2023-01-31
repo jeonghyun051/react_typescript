@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Socket from 'react-stomp';
 import { Input, Space } from 'antd';
+import { ChatListMessageListStyled, ChatListRoomNameStyled, ChatListStyled } from './style';
+import { SendOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -27,7 +29,7 @@ const ChatList = ({ room }: ChatListProps) => {
     },
   ]);
 
-  const handleClick3 = () => {
+  const handleSendClick = () => {
     console.log('Asd');
     let data = {
       roomNo: room.no, // 방번호
@@ -44,8 +46,10 @@ const ChatList = ({ room }: ChatListProps) => {
   };
 
   return (
-    <div style={{ display: 'blcok', border: '1px solid #e6e6e6', width: '500px', height: '400px', padding: '10px' }}>
-      <div style={{ textAlign: 'center', fontSize: '17px' }}>room {room.name}</div>
+    <ChatListStyled>
+      <ChatListRoomNameStyled>
+        room {room.name}
+      </ChatListRoomNameStyled>
       <Socket
         url='http://localhost:8080/ws-stomp'
         topics={['/sub/chat/room/' + room.no]}
@@ -56,20 +60,15 @@ const ChatList = ({ room }: ChatListProps) => {
         }}
         ref={$websocket}
       />
-
-      <div style={{ height: '85%' }}>
+      <ChatListMessageListStyled>
         {message.map((item) => (
           <div>asd: {item.msg}</div>
         ))}
-      </div>
+      </ChatListMessageListStyled>
       <div>
-        <Space direction='vertical'>
-          <Search placeholder='input search text' onSearch={handleClick3} style={{ width: 480 }} />
-        </Space>
-
-        {/* <input value={sendMessage} onChange={(e) => setSendMessage(e.target.value)} /> */}
+        <Input addonAfter={<SendOutlined onClick={handleSendClick}/>} placeholder="Basic usage" style={{ width: 480 }} />
       </div>
-    </div>
+    </ChatListStyled>
   );
 };
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import RoomList from '../../components/room/RoomList';
 import ChatList from '../../components/chat/ChatList';
+import { ChatRoomListStyled, ChatStyled } from './style';
 
 const user = [
   {
@@ -34,16 +35,16 @@ const Chat = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <ChatStyled>
         {/* {user.map((item) => ( */}
         <ChatList room={selectedRoom} />
         {/* ))} */}
-        <div style={{ height: '400px', marginLeft: '10px', background: '#F5F5F5', border: '1px solid #e6e6e6' }}>
+        <ChatRoomListStyled>
           {room.map((item) => (
             <RoomList room={item} />
           ))}
-        </div>
-      </div>
+        </ChatRoomListStyled>
+      </ChatStyled>
     </>
   );
 };
