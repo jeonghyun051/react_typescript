@@ -45,20 +45,19 @@ public class RedisConfig {
      * 어플리케이션에서 사용할 redisTemplate 설정
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
-
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new StringRedisSerializer());
+
+        // convertAndSend 할 때 json으로 변환 필요함
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 //        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
 //        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-
-//        redisTemplate.setValueSerializer(new StringRedisSerializer());
 
         return redisTemplate;
     }
