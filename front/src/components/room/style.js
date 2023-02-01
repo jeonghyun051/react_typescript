@@ -1,13 +1,11 @@
 import { Button } from 'antd';
+import { FlexDiv } from 'src/utils/CommonStyle';
 import styled from 'styled-components';
 
-export const RoomListStyled = styled.div`
-  width: 200px;
+export const RoomListStyled = styled(FlexDiv)`
+  width: 300px;
   display: flex;
   padding: 5px;
-  span {
-    background-color: #acc0d2;
-  }
   div {
     div {
       margin-left: 10px;
@@ -16,6 +14,7 @@ export const RoomListStyled = styled.div`
 `;
 
 export const RoomListButtonStyled = styled(Button)`
+  padding: 5px;
   height: 50px;
   width: 100%;
   display: flex;

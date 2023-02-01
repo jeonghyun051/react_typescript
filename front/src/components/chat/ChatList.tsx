@@ -1,21 +1,19 @@
 import React, { useRef, useState } from 'react';
 import Socket from 'react-stomp';
-import { Input, Space } from 'antd';
-import { ChatListMessageListStyled, ChatListRoomNameStyled, ChatListStyled } from './style';
-import { SendOutlined } from '@ant-design/icons';
+import { Avatar, Input } from 'antd';
+import {
+  ChatListMessageListStyled,
+  ChatListRoomNameStyled,
+  ChatListStyled,
+  ChatMsgStyled,
+  ChatNameMsgStyled,
+} from './style';
+import { SendOutlined, UserOutlined } from '@ant-design/icons';
+import { useAppSelector } from '../../store/hooks';
+import { FlexDiv } from '../../utils/CommonStyle';
+import { SocketConnect } from '../../utils/utils';
 
-const { Search } = Input;
-
-type ChatListProps = {
-  room: {
-    no: string;
-    name: string;
-  };
-};
-
-const ChatList = ({ room }: ChatListProps) => {
-  const $websocket = useRef<any>(null);
-
+const ChatList = () => {
   const [sendMessage, setSendMessage] = useState('');
 
   const [message, setMessage] = useState([
@@ -29,10 +27,14 @@ const ChatList = ({ room }: ChatListProps) => {
     },
   ]);
 
+  const selectedRoom = useAppSelector((state) => state.room);
+
+  const $websocket = useRef<any>(null);
+
   const handleSendClick = () => {
     console.log('Asd');
     let data = {
-      roomNo: room.no, // 방번호
+      roomNo: selectedRoom.no, // 방번호
       userName: 'k', // 유저이름
       userNo: '0', // 유저번호
       msg: sendMessage, // 메세지
@@ -47,24 +49,32 @@ const ChatList = ({ room }: ChatListProps) => {
 
   return (
     <ChatListStyled>
-      <ChatListRoomNameStyled>room {room.name}</ChatListRoomNameStyled>
-      <Socket
-        url='http://localhost:8080/ws-stomp'
-        topics={['/sub/chat/room/' + room.no]}
-        onMessage={(msg: any) => {
-          console.log('socket msg : ', msg);
-
+      {SocketConnect(
+        selectedRoom.no,
+        (msg: any) => {
           setMessage([...message, msg]);
-        }}
-        ref={$websocket}
-      />
+        },
+        $websocket
+      )}
+      <ChatListRoomNameStyled>{selectedRoom.name}</ChatListRoomNameStyled>
       <ChatListMessageListStyled>
         {message.map((item, index) => (
-          <div key={index}>asd: {item.msg}</div>
+          <>
+            <FlexDiv key={index}>
+              <Avatar shape='square' size={'default'} icon={<UserOutlined />} />
+              <ChatNameMsgStyled>
+                <div>김정현</div>
+                <ChatMsgStyled>{item.msg}</ChatMsgStyled>
+              </ChatNameMsgStyled>
+            </FlexDiv>
+          </>
         ))}
       </ChatListMessageListStyled>
+
       <div>
         <Input
+          value={sendMessage}
+          onChange={(e) => setSendMessage(e.target.value)}
           addonAfter={<SendOutlined onClick={handleSendClick} />}
           placeholder='Basic usage'
           style={{ width: 480 }}

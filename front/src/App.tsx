@@ -39,43 +39,9 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 }
 
 const App = () => {
-  const { name, phone, id } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
-
-  const [selectedKeys, setSelectedKeys] = useState(['']);
+  const [selectedKeys, setSelectedKeys] = useState(['Home']);
 
   useEffect(() => {}, []);
-
-  // const handleClick = () => {
-  //   let data = {
-  //     id: '1',
-  //     name: 'kjh',
-  //     phone: '010',
-  //   };
-  //   // dispatch(setUser(data));
-  // };
-
-  // const handleClick2 = () => {
-  //   let data = {
-  //     id: '2',
-  //     name: 'kjh2',
-  //     phone: '0102',
-  //   };
-  //   dispatch(loadMyInfo(data));
-  // };
-
-  {
-    /* <div>name : {name}</div>
-      <div>phone : {phone}</div>
-      <div>id : {id}</div>
-      <button onClick={handleClick}>button</button>
-      <button onClick={handleClick2}>button2</button> */
-  }
-  // <Home />
-
-  {
-    /* <Chat /> */
-  }
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -85,10 +51,10 @@ const App = () => {
         <SiderMainStyled />
         <Menu
           theme='dark'
+          selectedKeys={selectedKeys}
           defaultSelectedKeys={['Home']}
           mode='inline'
           items={items}
-          selectedKeys={selectedKeys}
           onClick={(e) => {
             setSelectedKeys([e.key]);
           }}
@@ -98,12 +64,12 @@ const App = () => {
         <HeaderStyled />
         <ContentStyled>
           <BreadcrumbStyled>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>{selectedKeys[0]}</Breadcrumb.Item>
             <Breadcrumb.Item></Breadcrumb.Item>
           </BreadcrumbStyled>
           <MainContentStyled>{selectedKeys[0] === 'Chatting' ? <Chat /> : <Home />}</MainContentStyled>
         </ContentStyled>
-        <FooterStyled>Ant Design ©2023 Created by Ant UED</FooterStyled>
+        <FooterStyled>@2023 KKimKao</FooterStyled>
       </Layout>
     </LayoutStyled>
   );

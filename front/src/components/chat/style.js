@@ -14,5 +14,17 @@ export const ChatListRoomNameStyled = styled.div`
 `;
 
 export const ChatListMessageListStyled = styled.div`
+  overflow: auto;
   height: 85%;
+`;
+
+export const ChatNameMsgStyled = styled.div`
+  margin-bottom: 5px;
+  margin-left: 5px;
+`;
+
+export const ChatMsgStyled = styled.div`
+  border: 1px solid #e6e6e6;
+  padding: 5px;
+  max-width: 200px;
 `;

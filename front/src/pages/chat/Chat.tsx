@@ -1,26 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RoomList from '../../components/room/RoomList';
 import ChatList from '../../components/chat/ChatList';
-import { ChatRoomListStyled, ChatStyled } from './style';
-
-const user = [
-  {
-    roomNo: '2',
-    roomName: 'second',
-  },
-  {
-    roomNo: '3',
-    roomName: 'th',
-  },
-];
+import { ButtonStyled, ChatRoomListDivStyled, ChatRoomListStyled, ChatStyled } from './style';
+import { Button } from 'antd';
 
 const Chat = () => {
   const [room, setRoom] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState({
-    no: '',
-    name: '',
-  });
 
   useEffect(() => {
     async function getRooms() {
@@ -36,11 +22,14 @@ const Chat = () => {
   return (
     <>
       <ChatStyled>
-        <ChatList room={selectedRoom} />
+        <ChatList />
         <ChatRoomListStyled>
-          {room.map((item, index) => (
-            <RoomList key={index} room={item} />
-          ))}
+          <ChatRoomListDivStyled>
+            {room.map((item, index) => (
+              <RoomList key={index} room={item} />
+            ))}
+          </ChatRoomListDivStyled>
+          <ButtonStyled type='primary'>새 채팅방</ButtonStyled>
         </ChatRoomListStyled>
       </ChatStyled>
     </>
