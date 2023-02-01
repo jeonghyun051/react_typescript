@@ -1,6 +1,7 @@
+import { Button } from 'antd';
 import styled from 'styled-components';
 
-const RoomListStyled = styled.div`
+export const RoomListStyled = styled.div`
   width: 200px;
   display: flex;
   padding: 5px;
@@ -14,4 +15,9 @@ const RoomListStyled = styled.div`
   }
 `;
 
-export { RoomListStyled };
+export const RoomListButtonStyled = styled(Button)`
+  height: 50px;
+  width: 100%;
+  display: flex;
+  text-align: left;
+`;

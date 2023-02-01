@@ -47,9 +47,7 @@ const ChatList = ({ room }: ChatListProps) => {
 
   return (
     <ChatListStyled>
-      <ChatListRoomNameStyled>
-        room {room.name}
-      </ChatListRoomNameStyled>
+      <ChatListRoomNameStyled>room {room.name}</ChatListRoomNameStyled>
       <Socket
         url='http://localhost:8080/ws-stomp'
         topics={['/sub/chat/room/' + room.no]}
@@ -61,12 +59,16 @@ const ChatList = ({ room }: ChatListProps) => {
         ref={$websocket}
       />
       <ChatListMessageListStyled>
-        {message.map((item) => (
-          <div>asd: {item.msg}</div>
+        {message.map((item, index) => (
+          <div key={index}>asd: {item.msg}</div>
         ))}
       </ChatListMessageListStyled>
       <div>
-        <Input addonAfter={<SendOutlined onClick={handleSendClick}/>} placeholder="Basic usage" style={{ width: 480 }} />
+        <Input
+          addonAfter={<SendOutlined onClick={handleSendClick} />}
+          placeholder='Basic usage'
+          style={{ width: 480 }}
+        />
       </div>
     </ChatListStyled>
   );

@@ -36,12 +36,10 @@ const Chat = () => {
   return (
     <>
       <ChatStyled>
-        {/* {user.map((item) => ( */}
         <ChatList room={selectedRoom} />
-        {/* ))} */}
         <ChatRoomListStyled>
-          {room.map((item) => (
-            <RoomList room={item} />
+          {room.map((item, index) => (
+            <RoomList key={index} room={item} />
           ))}
         </ChatRoomListStyled>
       </ChatStyled>
