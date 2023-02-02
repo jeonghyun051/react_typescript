@@ -1,12 +1,18 @@
 package com.example.chat.pubsub;
 
 import com.example.chat.dto.ChatDto;
+import com.example.chat.model.Room;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +24,14 @@ public class RedisSubscriber implements MessageListener {
     private final ObjectMapper objectMapper;
     private final RedisTemplate redisTemplate;
     private final SimpMessageSendingOperations messagingTemplate;
+
+    private ListOperations<String, ChatDto> opsListChat;
+
+    @PostConstruct
+    private void init() {
+        opsListChat = redisTemplate.opsForList();
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatDto.class));
+    }
 
     /**
      * Redis에서 메시지가 발행(publish)되면 대기하고 있던 onMessage가 해당 메시지를 받아 처리한다.
@@ -35,6 +49,8 @@ public class RedisSubscriber implements MessageListener {
             ChatDto roomMessage = objectMapper.readValue(publishMessage, ChatDto.class);
 
             System.out.println(roomMessage.getRoomNo() + "," + roomMessage);
+
+            opsListChat.rightPush(roomMessage.getRoomNo(),roomMessage);
 
             // Websocket 구독자에게 채팅 메시지 Send
             messagingTemplate.convertAndSend("/sub/chat/room/" + roomMessage.getRoomNo(), roomMessage);
