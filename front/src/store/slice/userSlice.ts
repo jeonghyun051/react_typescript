@@ -14,9 +14,9 @@ export const loadMyInfo = createAsyncThunk('GET/LOAD_MY_INFO_REQUEST', async (re
 
 interface UserState {
   // type
-  id: String | null;
-  name: String | null;
-  phone: String | null;
+  id: string | null;
+  name: string | null;
+  phone: string | null;
 }
 
 const initialState: UserState = {

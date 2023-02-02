@@ -19,4 +19,8 @@ export const RoomListButtonStyled = styled(Button)`
   width: 100%;
   display: flex;
   text-align: left;
+  .ant-avatar-group {
+    width: 70px;
+    justify-content: center;
+  }
 `;

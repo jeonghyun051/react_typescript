@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface RoomState {
   // type
-  no: String | null | '';
-  name: String | null | '';
+  no: string | '';
+  name: string | '';
 }
 
 const initialState: RoomState = {

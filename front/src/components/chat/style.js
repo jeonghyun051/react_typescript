@@ -14,7 +14,8 @@ export const ChatListRoomNameStyled = styled.div`
 `;
 
 export const ChatListMessageListStyled = styled.div`
-  overflow: auto;
+  display: block;
+  overflow: scroll;
   height: 85%;
 `;
 
