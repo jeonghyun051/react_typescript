@@ -2,6 +2,21 @@ server:
   port: 8080
 
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chat?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    username: chat
+    password: chat
+
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
   redis:
     host: 127.0.0.1
     port: 6379
+
+
