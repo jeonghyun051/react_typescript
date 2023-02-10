@@ -6,6 +6,7 @@ export const ChatListStyled = styled.div`
   width: 500px;
   height: 400px;
   padding: 10px;
+  margin-left: 10px;
 `;
 
 export const ChatListRoomNameStyled = styled.div`

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Button, Tooltip } from 'antd';
-import { RoomListButtonStyled, RoomListStyled } from './style';
+import { RoomListButtonStyled, RoomListStyled } from './RoomListStyle';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setRoom } from '../../store/slice/roomSlice';
 import { SocketConnect } from '../..//utils/utils';
+import { Room, Message } from '../../types';
 
 type RoomListProps = {
   room: {
@@ -13,32 +14,16 @@ type RoomListProps = {
   };
 };
 
-type Room = {
-  no: string;
-  name: string;
-};
-
 const RoomList = ({ room }: RoomListProps) => {
-  const selectedRoom = useAppSelector((state) => state.room);
+  const selectedRoom = useAppSelector<Room>((state) => state.room);
   const dispatch = useAppDispatch();
   const $websocket = useRef<any>(null);
-  const [message, setMessage] = useState({
-    roomNo: '',
-    userName: '',
-    userNo: '',
-    msg: '',
-    dateTime: '',
-    type: '',
-  });
+
+  const [message, setMessage] = useState<Message | null>();
 
   const handleRoomClick = (room: Room) => {
     dispatch(setRoom(room));
   };
-
-  //   const sockectCallback = (msg: any) => {
-  //     console.log('socket msg : ', msg);
-  //     setMessage(msg);
-  //   };
 
   return (
     <>
@@ -66,7 +51,7 @@ const RoomList = ({ room }: RoomListProps) => {
           </Badge>
           <div style={{ width: '100px' }}>
             <div>{room.name}</div>
-            <div>{message.msg}</div>
+            <div>{message?.msg}</div>
           </div>
         </RoomListButtonStyled>
       </RoomListStyled>

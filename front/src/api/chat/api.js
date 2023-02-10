@@ -1,6 +1,6 @@
 import axios from 'axios';
+const URL = 'http://localhost:8080';
 
 export const getChat = async (request) => {
-  const { data } = await axios.post('http://localhost:8080/chat', request);
-  return data;
+  return await axios.post(`${URL}/chat`, request);
 };

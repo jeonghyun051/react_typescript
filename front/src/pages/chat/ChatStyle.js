@@ -10,7 +10,6 @@ export const ChatRoomListStyled = styled.div`
   text-align: -webkit-center;
   width: 310px;
   height: 400px;
-  margin-left: 10px;
   background: #f5f5f5;
   border: 1px solid #e6e6e6;
 `;

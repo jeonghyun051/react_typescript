@@ -19,6 +19,7 @@ export const SiderMainStyled = styled.div`
 export const HeaderStyled = styled(Header)`
   padding: 0px;
   background: ${colorBgContainer} !important;
+  text-align: right;
 `;
 
 export const ContentStyled = styled(Content)`

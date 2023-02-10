@@ -7,34 +7,24 @@ import {
   ChatListStyled,
   ChatMsgStyled,
   ChatNameMsgStyled,
-} from './style';
+} from './ChatListStyle';
 import { SendOutlined, UserOutlined } from '@ant-design/icons';
 import { useAppSelector } from '../../store/hooks';
 import { FlexDiv } from '../../utils/CommonStyle';
 import { isNullOrUndefined, SocketConnect } from '../../utils/utils';
 import { getChat } from '../../api/chat/api';
-import { isVisible } from '@testing-library/user-event/dist/utils';
-
-type Message = {
-  roomNo: string;
-  userName: string;
-  userNo: string;
-  msg: string;
-  dateTime: string;
-  type: string;
-};
+import { Message, Room } from '../../types';
 
 const ChatList = () => {
-  const [sendMessage, setSendMessage] = useState('');
+  const [sendMessage, setSendMessage] = useState<string>('');
 
   const [message, setMessage] = useState<Message[]>([]);
 
-  const selectedRoom = useAppSelector((state) => state.room);
+  const selectedRoom = useAppSelector<Room>((state) => state.room);
 
-  const [isSelectedRoom, setIsSelectedRoom] = useState(true);
+  const [isSelectedRoom, setIsSelectedRoom] = useState<boolean>(true);
 
   const $websocket = useRef<any>(null);
-
   const scrollRef = useRef<any>();
 
   useEffect(() => {
@@ -44,12 +34,12 @@ const ChatList = () => {
     }
 
     setIsSelectedRoom(false);
-    async function get() {
-      const res: any = await getChat(selectedRoom);
-
-      setMessage(res);
+    async function init() {
+      const res = await getChat(selectedRoom);
+      setMessage(res.data);
     }
-    get();
+
+    init();
 
     // setMessage(res);
   }, [selectedRoom]);
@@ -63,10 +53,7 @@ const ChatList = () => {
   }, [message, selectedRoom]);
 
   const handleSendClick = async () => {
-    if (isSelectedRoom) {
-      return;
-    }
-    if (sendMessage === '') {
+    if (isSelectedRoom || sendMessage === '') {
       return;
     }
 
@@ -98,9 +85,9 @@ const ChatList = () => {
         {selectedRoom.name === '' ? '채팅방을 선택해주세요.' : selectedRoom.name}
       </ChatListRoomNameStyled>
       <ChatListMessageListStyled ref={scrollRef}>
-        {message.map((item, index) => (
+        {message.map((item) => (
           <>
-            <FlexDiv key={index}>
+            <FlexDiv key={item.roomNo}>
               <Avatar shape='square' size={'default'} icon={<UserOutlined />} />
               <ChatNameMsgStyled>
                 <div>{item.userName}</div>
