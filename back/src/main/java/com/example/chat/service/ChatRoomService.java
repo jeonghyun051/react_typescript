@@ -18,7 +18,7 @@ public class ChatRoomService {
         this.chatRoomRepository = chatRoomRepository;
     }
 
-    public Room findRoom(Room room) {
+    public List<Room> findRoom(Room room) {
         return chatRoomRepository.findRoom(room);
     }
 

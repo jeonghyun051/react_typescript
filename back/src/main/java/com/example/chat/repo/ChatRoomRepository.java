@@ -4,6 +4,7 @@ import com.example.chat.dto.ChatDto;
 import com.example.chat.model.Room;
 import com.example.chat.pubsub.RedisSubscriber;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -42,8 +43,18 @@ public class ChatRoomRepository {
     }
 
     // 하나의 룸 가져오기
-    public Room findRoom(Room room) {
-        return (Room) opsHashChatRoom.get("rooms",room.getNo());
+    public List<Room> findRoom(Room room) {
+        List<Room> arr = new ArrayList<Room>();
+
+        System.out.println("abc" + (Room) opsHashChatRoom.get("rooms","1"));
+
+
+        arr.add((Room) opsHashChatRoom.get("rooms","1"));
+//        arr.add('2', (Room) opsHashChatRoom.get("rooms","2"));
+//        arr.add('3', (Room)opsHashChatRoom.get("rooms","3"));
+//        arr.add('4', (Room)opsHashChatRoom.get("rooms","4"));
+
+        return arr;
     }
     public Map<Object, Object> findAllRoom() {
         return opsHashChatRoom.entries("rooms");

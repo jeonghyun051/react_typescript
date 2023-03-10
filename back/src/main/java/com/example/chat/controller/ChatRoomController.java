@@ -26,7 +26,7 @@ public class ChatRoomController {
     }
 
     @GetMapping("/room")
-    public ResponseEntity<Room> room(@RequestBody Room room) {
+    public ResponseEntity<List<Room>> room(Room room) {
         return new ResponseEntity<>(chatRoomService.findRoom(room), HttpStatus.OK);
     }
 

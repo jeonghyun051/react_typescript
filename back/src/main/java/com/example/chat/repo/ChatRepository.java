@@ -21,7 +21,7 @@ public class ChatRepository {
     public List<ChatDto> getChat(Room room) {
         List<ChatDto> rList = null;
 
-        rList = (List) redisTemplate.opsForList().range(room.getNo(), 0 ,-1);
+        rList = (List) redisTemplate.opsForList().range(Long.toString(room.getNo()) , 0 ,-1);
 
         return rList;
     }
