@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { FlexDiv } from 'src/utils/CommonStyle';
+import { FlexDiv } from '../../util/CommonStyle';
 import styled from 'styled-components';
 
 export const RoomListStyled = styled(FlexDiv)`

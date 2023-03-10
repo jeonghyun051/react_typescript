@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import RoomList from '../../components/room/RoomList';
 import ChatList from '../../components/chat/ChatList';
 import { ButtonStyled, ChatRoomListDivStyled, ChatRoomListStyled, ChatStyled } from './ChatStyle';
-import { getRooms } from '../../api/room/api';
+import { getRoom, getRooms } from '../../api/room/api';
 import { Room } from '../../types';
 
 const Chat = () => {
@@ -13,6 +13,9 @@ const Chat = () => {
     async function init() {
       const res = await getRooms();
       setRoom(Object.values(res.data));
+
+      const ss = await getRoom();
+      console.log('ss :', ss);
     }
 
     init();
@@ -22,6 +25,7 @@ const Chat = () => {
 
   return (
     <>
+      {console.log('Chat render')}
       <ChatStyled>
         <ChatRoomListStyled>
           <ChatRoomListDivStyled>

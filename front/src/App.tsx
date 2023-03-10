@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
-import Chat from './pages/chat/Chat';
-import Home from './pages/Home';
-import React, { useState } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HomeOutlined, MessageOutlined } from '@ant-design/icons';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu } from 'antd';
+
 import {
   BreadcrumbStyled,
   ContentStyled,
@@ -13,18 +12,24 @@ import {
   MainContentStyled,
   SiderMainStyled,
 } from './style';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import Login from './pages/login/Login';
-import Join from './pages/join/Join';
+import { User } from './types';
+
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { resetUser } from './store/slice/userSlice';
+
+const Home = lazy(() => import('./pages/Home'));
+const Join = lazy(() => import('./pages/join/Join'));
+const Chat = lazy(() => import('./pages/chat/Chat'));
+const Login = lazy(() => import('./pages/login/Login'));
 
 const { Sider } = Layout;
 
 const App = () => {
   const [selectedKeys, setSelectedKeys] = useState(['Home']);
-
-  useEffect(() => {}, []);
-
   const [collapsed, setCollapsed] = useState(false);
+
+  const loginUser = useAppSelector<User>((state) => state.user);
+  const dispatch = useAppDispatch();
 
   return (
     <BrowserRouter>
@@ -50,8 +55,21 @@ const App = () => {
         </Sider>
         <Layout className='site-layout'>
           <HeaderStyled>
-            <Link to='/login'>Login</Link>&nbsp;
-            <Link to='/join'>Join</Link>
+            {loginUser.isLogin ? (
+              <Link
+                onClick={() => {
+                  sessionStorage.removeItem('userNo');
+                  dispatch(resetUser(''));
+                  // navigate('/login')
+                }}
+                to='/login'
+              >
+                Logout
+              </Link>
+            ) : (
+              <Link to='/login'>Login</Link>
+            )}
+            &nbsp;<Link to='/join'>Join</Link>&nbsp;
           </HeaderStyled>
           <ContentStyled>
             <BreadcrumbStyled>
@@ -59,12 +77,14 @@ const App = () => {
               <Breadcrumb.Item></Breadcrumb.Item>
             </BreadcrumbStyled>
             <MainContentStyled>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/chat' element={<Chat />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/join' element={<Join />} />
-              </Routes>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/chat' element={<Chat />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/join' element={<Join />} />
+                </Routes>
+              </Suspense>
             </MainContentStyled>
           </ContentStyled>
           <FooterStyled>@2023 KKimKao</FooterStyled>

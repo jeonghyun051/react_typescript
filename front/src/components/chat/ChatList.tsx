@@ -10,16 +10,17 @@ import {
 } from './ChatListStyle';
 import { SendOutlined, UserOutlined } from '@ant-design/icons';
 import { useAppSelector } from '../../store/hooks';
-import { FlexDiv } from '../../utils/CommonStyle';
-import { isNullOrUndefined, SocketConnect } from '../../utils/utils';
+import { FlexDiv } from '../../util/CommonStyle';
+import { isNullOrUndefined, SocketConnect } from '../../util/utils';
 import { getChat } from '../../api/chat/api';
-import { Message, Room } from '../../types';
+import { Message, Room, User } from '../../types';
 
 const ChatList = () => {
   const [sendMessage, setSendMessage] = useState<string>('');
 
   const [message, setMessage] = useState<Message[]>([]);
 
+  const loginUser = useAppSelector<User>((state) => state.user);
   const selectedRoom = useAppSelector<Room>((state) => state.room);
 
   const [isSelectedRoom, setIsSelectedRoom] = useState<boolean>(true);
@@ -43,6 +44,10 @@ const ChatList = () => {
 
     // setMessage(res);
   }, [selectedRoom]);
+
+  useEffect(() => {
+    console.log('componnet loginUser : ', loginUser);
+  }, [loginUser]);
 
   useEffect(() => {
     // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;

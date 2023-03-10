@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { request } from 'http';
+import { User } from '../../types';
+import { isLogin } from '../../util/utils';
 
 export const loadMyInfo = createAsyncThunk('GET/LOAD_MY_INFO_REQUEST', async (request: UserState) => {
   const promise = await new Promise(async (resolve, reject) => {
@@ -12,17 +14,15 @@ export const loadMyInfo = createAsyncThunk('GET/LOAD_MY_INFO_REQUEST', async (re
   return promise;
 });
 
-interface UserState {
-  // type
-  id: string | null;
-  name: string | null;
-  phone: string | null;
-}
+interface UserState extends User {}
 
 const initialState: UserState = {
-  id: '',
+  isLogin: isLogin(),
+  no: 0,
   name: '',
   phone: '',
+  username: '',
+  roles: '',
 };
 
 export const userSlice = createSlice({
@@ -30,19 +30,25 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.id = action.payload.id;
+      state.isLogin = isLogin();
+      state.no = action.payload.no;
       state.name = action.payload.name;
       state.phone = action.payload.phone;
+      state.username = action.payload.username;
+      state.roles = action.payload.roles;
+    },
+    resetUser: (state, action) => {
+      return { ...initialState };
     },
   },
   extraReducers: {
     [loadMyInfo.fulfilled.type]: (state, action) => {
-      state.id = action.payload.id;
+      state.no = action.payload.no;
       state.name = action.payload.name;
       state.phone = action.payload.phone;
     },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, resetUser } = userSlice.actions;
 export default userSlice.reducer;

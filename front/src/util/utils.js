@@ -1,5 +1,27 @@
 import Socket from 'react-stomp';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+
+export const navigate = (url) => {
+  try {
+    // const navigate2 = useNavigate();
+    // navigate2(url);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ *
+ * @returns {boolean} 로그인 유무 true(로그인상태)
+ */
+export const isLogin = () => {
+  try {
+    return !isNullOrUndefined(sessionStorage.getItem('userNo'));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * 값이 null 또는 undefined 인지 확인 (조건에 맞을 시 true return)

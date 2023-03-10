@@ -16,27 +16,26 @@ type Action =
   | { type: 'TOGGLE_GOOD' };
 
 function reducer(state: State, action: Action): State {
+  const newState = { ...state };
+
+  // switch case문을 이용해서 action 으로 접근하는 타입 오류를 막을 수 있습니다.
   switch (action.type) {
     case 'SET_COUNT':
-      return {
-        ...state,
-        count: action.count, // count가 자동완성되며, number 타입인걸 알 수 있습니다.
-      };
+      newState.count = action.count;
+      return newState;
+
     case 'SET_TEXT':
-      return {
-        ...state,
-        text: action.text, // text가 자동완성되며, string 타입인걸 알 수 있습니다.
-      };
+      newState.text = action.text;
+      return newState;
+
     case 'SET_COLOR':
-      return {
-        ...state,
-        color: action.color, // color 가 자동완성되며 color 가 Color 타입인걸 알 수 있습니다.
-      };
+      newState.color = action.color;
+      return newState;
+
     case 'TOGGLE_GOOD':
-      return {
-        ...state,
-        isGood: !state.isGood,
-      };
+      newState.isGood = !newState.isGood;
+      return newState;
+
     default:
       throw new Error('Unhandled action');
   }

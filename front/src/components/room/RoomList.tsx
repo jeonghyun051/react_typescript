@@ -4,7 +4,7 @@ import { Avatar, Badge, Button, Tooltip } from 'antd';
 import { RoomListButtonStyled, RoomListStyled } from './RoomListStyle';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setRoom } from '../../store/slice/roomSlice';
-import { SocketConnect } from '../..//utils/utils';
+import { SocketConnect } from '../../util/utils';
 import { Room, Message } from '../../types';
 
 type RoomListProps = {

@@ -11,3 +11,12 @@ export type Message = {
   dateTime: string;
   type: string;
 };
+
+export type User = {
+  isLogin: boolean;
+  no: number;
+  name: string;
+  phone: string;
+  username: string;
+  roles: string;
+};

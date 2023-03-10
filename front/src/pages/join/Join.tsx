@@ -23,6 +23,7 @@ const Join = () => {
     console.log('res', res);
   };
 
+  console.log('join render');
   return (
     <LoginStyled>
       <Form

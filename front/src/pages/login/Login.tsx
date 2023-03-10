@@ -1,9 +1,11 @@
 import { Button, Form, Input, Select } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LoginStyled } from './LoginStyle';
 import image_kakao from '../../assets/images/kakao_login_medium_narrow.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../api/user/api';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/slice/userSlice';
 
 const layout = {
   labelCol: { span: 8 },
@@ -15,13 +17,32 @@ const tailLayout = {
 };
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    const res = await login(values);
+    try {
+      const res = await login(values);
 
-    console.log('res', res);
+      console.log('res', res);
+      if (res.status === 200) {
+        sessionStorage.setItem('userNo', res.data.no);
+        navigate('/');
+        dispatch(setUser(res.data));
+      } else {
+        alert('로그인 실패');
+      }
+    } catch (error) {
+      console.error('error :', error);
+      alert('로그인 실패');
+    }
   };
+
+  {
+    console.log('Login render');
+  }
 
   return (
     <LoginStyled>
